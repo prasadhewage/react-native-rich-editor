@@ -53,7 +53,15 @@ export default class RichTextEditor extends Component {
         that.layout = {};
         that.selectionChangeListeners = [];
         const {
-            editorStyle: {backgroundColor, color, placeholderColor, initialCSSText, cssText, contentCSSText, caretColor} = {},
+            editorStyle: {
+                backgroundColor,
+                color,
+                placeholderColor,
+                initialCSSText,
+                cssText,
+                contentCSSText,
+                caretColor,
+            } = {},
             html,
             pasteAsPlainText,
             onPaste,
@@ -148,7 +156,8 @@ export default class RichTextEditor extends Component {
 
     onMessage(event) {
         const that = this;
-        const {onFocus, onBlur, onChange, onPaste, onKeyUp, onKeyDown, onInput, onMessage, onCursorPosition} = that.props;
+        const {onFocus, onBlur, onChange, onPaste, onKeyUp, onKeyDown, onInput, onMessage, onCursorPosition} =
+            that.props;
         try {
             const message = JSON.parse(event.nativeEvent.data);
             const data = message.data;
@@ -239,14 +248,14 @@ export default class RichTextEditor extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const {editorStyle, disabled,placeholder} = this.props;
+        const {editorStyle, disabled, placeholder} = this.props;
         if (prevProps.editorStyle !== editorStyle) {
             editorStyle && this.setContentStyle(editorStyle);
         }
         if (disabled !== prevProps.disabled) {
             this.setDisable(disabled);
         }
-        if(placeholder!== prevProps.placeholder){
+        if (placeholder !== prevProps.placeholder) {
             this.setPlaceholder(placeholder);
         }
     }
@@ -344,6 +353,10 @@ export default class RichTextEditor extends Component {
     focusContentEditor() {
         this.showAndroidKeyboard();
         this.sendAction(actions.content, 'focus');
+    }
+
+    scrollSelectionIntoView() {
+        this.sendAction(actions.content, 'scrollSelectionIntoView');
     }
 
     /**
@@ -473,6 +486,6 @@ const styles = StyleSheet.create({
     },
 
     webview: {
-        backgroundColor: "transparent"
-    }
+        backgroundColor: 'transparent',
+    },
 });
